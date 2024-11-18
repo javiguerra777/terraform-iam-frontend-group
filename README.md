@@ -1,6 +1,6 @@
-# Terraform Lambda Project
+# Terraform IAM Group Project
 
-This project uses Terraform to create a basic Lambda Function on AWS.
+This project uses Terraform to create an IAM Group for Front End Developers and IAM user to join this group.
 
 ## Prerequisites
 
@@ -13,7 +13,8 @@ This project uses Terraform to create a basic Lambda Function on AWS.
 ├── .gitignore
 ├── .terraform/ 
 ├── .terraform.lock.hcl 
-├── dynamodb_table.tf 
+├── iam_user_group.tf 
+├── iam_user.tf 
 ├── provider.tf 
 ├── README.md 
 ├── terraform.tfstate 
@@ -22,7 +23,8 @@ This project uses Terraform to create a basic Lambda Function on AWS.
 ```
 
 ## Files
-- `dynamodb_table.tf`: Defines the DynamoDB table resource.
+- `iam_user_group.tf`: Defines the IAM group and permissions to be created on AWS.
+- `iam_user.tf`: Defines the IAM user to be added to the group.
 - `provider.tf`: Configures the AWS provider.
 - `variables.tf`: Contains the variables used in the project.
 - `.gitignore`: Specifies files and directories to be ignored by Git.
@@ -32,10 +34,10 @@ This project uses Terraform to create a basic Lambda Function on AWS.
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/javiguerra777/terraform-dynamodb-project.git
+    git clone https://github.com/javiguerra777/terraform-iam-frontend-group.git
     ```
 
-2. After cloning the repository to your computer you will see a folder called `terraform-dynamodb-project`, open this folder in a code editor of choice. 
+2. After cloning the repository to your computer you will see a folder called `terraform-iam-frontend-group`, open this folder in a code editor of choice. 
 
 3.  **Create a `variables.tf` file:**
     You will need to create a `variables.tf` file and structure it like this before you run the terraform project:
@@ -47,42 +49,14 @@ This project uses Terraform to create a basic Lambda Function on AWS.
       default = "aws secret key"
     }
     variable "region" {
-      default = "aws region"
+      default = "us-west-1"
     }
-    variable "table_name" {
-      default = "table name"
-    }
-
-    variable "billing_mode" {
-      default = valid options are: "PAY_PER_REQUEST" or "PROVISIONED"
+    variable "group_name" {
+      default = "IAM Group Name"
     }
 
-    variable "partition_key" {
-      default = "name of partition key"
-    }
-
-    variable "sort_key" {
-      default = "name of sort key"
-    }
-
-    variable "read_capacity" {
-      default = 5
-      description = "Read Capacity Units"
-      type = number
-    }
-
-    variable "write_capacity" {
-      default = 5
-      description = "Write Capacity Units"
-      type = number
-    }
-
-    variable "environment" {
-      default = "name of environment"
-    }
-
-    variable "project_name" {
-      default = "name of project"
+    variable "user_name" {
+      default = "IAM User name"
     }
     ```
 
@@ -105,23 +79,19 @@ This project uses Terraform to create a basic Lambda Function on AWS.
 
 4. Confirm the apply step by typing `yes`.
 
-5. If you go to your AWS DynamoDB tables you can see the newest table you created
+5. If you go to your AWS IAM User Group and Users tables you can see the newest group and user created
 
 ## Variables
 
-- **table_name**: The name of the DynamoDB table.
-- **billing_mode**: The billing mode for the DynamoDB table (default: PAY_PER_REQUEST).
-- **partition_key**: The partition key for the DynamoDB table.
-- **sort_key**: The sort key for the DynamoDB table.
-- **read_capacity**: The read capacity units for the DynamoDB table (default: 5).
-- **write_capacity**: The write capacity units for the DynamoDB table (default: 5).
-- **environment**: The environment tag for the DynamoDB table.
-- **project_name**: The project name tag for the DynamoDB table.
+- **group_name**: The name of the IAM group.
+- **user_name**: The name of the IAM user.
 
 ## Outputs
 
-- **table_arn**: The ARN of the created DynamoDB table.
-- **table_name**: The name of the created DynamoDB table.
+- **iam_group_name**: The name of the created IAM group.
+- **iam_group_arn**: The ARN of the created IAM group.
+- **iam_user_name**: The name of the created IAM user.
+- **iam_user_arn**: The ARN of the created IAM user.
 
 ## Cleanup
 
